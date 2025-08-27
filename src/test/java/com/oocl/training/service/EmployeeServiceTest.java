@@ -96,15 +96,21 @@ class EmployeeServiceTest {
     void should_select_employee_by_gender_successfully(){
         //Given
         String gender="male";
-        List<Employee> employee = List.of(new Employee(1, "1", "male", 10000, 20,1));
-        List<Employee> expection = List.of(new Employee(1, "1", "male", 10000, 20, 1));
-        Mockito.when(employeeTable.getEmployee(gender)).thenReturn(employee);
+        List<Employee> employees_get = List.of(new Employee(1, "1", "male", 10000, 20,1),
+                new Employee(1, "2", "female", 10000, 20,1),
+                new Employee(1, "3", "male", 10000, 20,1));
+        List<Employee> expection = List.of(new Employee(1, "1", "male", 10000, 20, 1),
+                new Employee(1, "3", "male", 10000, 20,1));
+        Mockito.when(employeeTable.getEmployee(gender)).thenReturn(employees_get);
         //When
         List<Employee> result = employeeService.getEmployeeByGender(gender);
-        assertEquals(expection.get(0).getActive(),result.get(0).getActive());
-        assertEquals(expection.get(0).getId(),result.get(0).getId());
-        assertEquals(expection.get(0).getGender(),result.get(0).getGender());
-        assertEquals(expection.get(0).getSalary(),result.get(0).getSalary());
+        assertEquals(expection.size(),result.size());
+        for(int i=0;i<result.size();i++){
+            assertEquals(expection.get(i).getSalary(),result.get(i).getSalary());
+            assertEquals(expection.get(i).getId(),result.get(i).getId());
+            assertEquals(expection.get(i).getGender(),result.get(i).getGender());
+            assertEquals(expection.get(i).getAge(),result.get(i).getAge());
+        }
     }
 
 }

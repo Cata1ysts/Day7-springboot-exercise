@@ -35,6 +35,7 @@ public class EmployeeService {
         if (gender != null && !gender.isEmpty()) {
             return employeeTable.getEmployee(gender).stream()
                     .filter(employee -> employee.getActive())
+                    .filter(employee -> employee.getGender().equals(gender))
                     .toList();
         }
         return employeeTable.getEmployee();
