@@ -28,7 +28,7 @@ class EmployeeServiceTest {
                 .thenReturn(employee);
         //When
         Employee result = employeeService.addEmployee(employee);
-        assertEquals(expection.getAge(),result.getAge());
+        compareEmployee(expection,result);
     }
 
     @Test
@@ -86,10 +86,7 @@ class EmployeeServiceTest {
         Mockito.when(employeeTable.getEmployee(eid)).thenReturn(employee);
         //When
         Employee result = employeeService.getEmployeeById(eid);
-        assertEquals(expection.getActive(),result.getActive());
-        assertEquals(expection.getId(),result.getId());
-        assertEquals(expection.getGender(),result.getGender());
-        assertEquals(expection.getSalary(),result.getSalary());
+        compareEmployee(expection,result);
     }
 
     @Test
@@ -106,11 +103,33 @@ class EmployeeServiceTest {
         List<Employee> result = employeeService.getEmployeeByGender(gender);
         assertEquals(expection.size(),result.size());
         for(int i=0;i<result.size();i++){
-            assertEquals(expection.get(i).getSalary(),result.get(i).getSalary());
-            assertEquals(expection.get(i).getId(),result.get(i).getId());
-            assertEquals(expection.get(i).getGender(),result.get(i).getGender());
-            assertEquals(expection.get(i).getAge(),result.get(i).getAge());
+            compareEmployee(expection.get(i),result.get(i));
         }
+    }
+    @Test
+    void should_update_employee_by_id_successfully(){
+        //Given
+        int eid=1;
+        List<Employee> employees_get = List.of(new Employee(1, "1", "male", 10000, 20,1),
+                new Employee(2, "2", "female", 10000, 20,1),
+                new Employee(3, "3", "male", 10000, 20,1));
+        Employee expection = new Employee(1, "1", "female", 10000, 20,1);
+        Employee testdata = new Employee(1, "1", "female", 10000, 20,1);
+        Mockito.when(employeeTable.getEmployee(eid)).thenReturn(employees_get.get(0));
+        Mockito.when(employeeTable.updateEmployee(eid,testdata)).thenReturn(testdata);
+        //When
+        Employee result = employeeService.updateEmployee(eid,testdata);
+        compareEmployee(expection, result);
+    }
+
+    private static void compareEmployee(Employee expection, Employee result) {
+        assertEquals(expection.getActive(), result.getActive());
+        assertEquals(expection.getId(), result.getId());
+        assertEquals(expection.getGender(), result.getGender());
+        assertEquals(expection.getSalary(), result.getSalary());
+        assertEquals(expection.getCompanyId(), result.getCompanyId());
+        assertEquals(expection.getName(), result.getName());
+        assertEquals(expection.getActive(), result.getActive());
     }
 
 }
