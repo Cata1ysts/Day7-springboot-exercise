@@ -107,6 +107,25 @@ class EmployeeServiceTest {
             compareEmployee(expection.get(i),result.get(i));
         }
     }
+
+    @Test
+    void should_select_all_employee_successfully(){
+        //Given
+        String gender=null;
+        List<Employee> employees_get = List.of(new Employee(1, "1", "male", 10000, 20,1),
+                new Employee(1, "2", "female", 10000, 20,1),
+                new Employee(1, "3", "male", 10000, 20,1));
+        List<Employee> expection = List.of(new Employee(1, "1", "male", 10000, 20,1),
+                new Employee(1, "2", "female", 10000, 20,1),
+                new Employee(1, "3", "male", 10000, 20,1));
+        Mockito.when(employeeTable.getEmployee()).thenReturn(employees_get);
+        //When
+        List<Employee> result = employeeService.getEmployeeByGender(gender);
+        assertEquals(expection.size(),result.size());
+        for(int i=0;i<result.size();i++){
+            compareEmployee(expection.get(i),result.get(i));
+        }
+    }
     @Test
     void should_update_employee_by_id_successfully(){
         //Given
