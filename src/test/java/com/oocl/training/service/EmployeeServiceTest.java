@@ -23,9 +23,10 @@ class EmployeeServiceTest {
     void should_create_employee_successfully(){
         //Given
         Employee employee = new Employee(0, "1", "male", 10000, 20,1);
+        Employee employee_created = new Employee(1, "1", "male", 10000, 20,1);
         Employee expection = new Employee(1, "1", "male", 10000, 20,1);
         Mockito.when(employeeTable.newEmployee(Mockito.any(Employee.class)))
-                .thenReturn(employee);
+                .thenReturn(employee_created);
         //When
         Employee result = employeeService.addEmployee(employee);
         compareEmployee(expection,result);
@@ -121,7 +122,6 @@ class EmployeeServiceTest {
         Employee result = employeeService.updateEmployee(eid,testdata);
         compareEmployee(expection, result);
     }
-
     private static void compareEmployee(Employee expection, Employee result) {
         assertEquals(expection.getActive(), result.getActive());
         assertEquals(expection.getId(), result.getId());
