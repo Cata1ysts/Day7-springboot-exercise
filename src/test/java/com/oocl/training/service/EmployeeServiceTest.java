@@ -122,6 +122,35 @@ class EmployeeServiceTest {
         Employee result = employeeService.updateEmployee(eid,testdata);
         compareEmployee(expection, result);
     }
+
+    @Test
+    void should_return_page_successfully(){
+        //Given
+        int page =2;
+        int size = 2;
+        List<Employee> employees_get = List.of(new Employee(1, "1", "male", 10000, 20,1),
+                new Employee(2, "2", "female", 10000, 20,1),
+                new Employee(3, "3", "male", 10000, 20,1),
+                new Employee(4, "1", "male", 10000, 20,1),
+                new Employee(5, "2", "female", 10000, 20,1),
+                new Employee(6, "3", "male", 10000, 20,1));
+
+
+        List<Employee> expection = List.of(
+                new Employee(3, "3", "male", 10000, 20,1),
+                new Employee(4, "1", "male", 10000, 20,1)
+        );
+        Employee testdata = new Employee(1, "1", "female", 10000, 20,1);
+        Mockito.when(employeeTable.getEmployee()).thenReturn(employees_get);
+        //When
+        List<Employee> result = employeeService.getEmployeeByPage(page,size);
+        assertEquals(expection.size(),result.size());
+        for(int i=0;i<result.size();i++){
+            compareEmployee(expection.get(i),result.get(i));
+        }
+    }
+
+
     private static void compareEmployee(Employee expection, Employee result) {
         assertEquals(expection.getActive(), result.getActive());
         assertEquals(expection.getId(), result.getId());
