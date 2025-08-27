@@ -1,4 +1,4 @@
-package com.oocl.training.dao;
+package com.oocl.training.model;
 
 public class Employee {
     private int id;
@@ -7,12 +7,24 @@ public class Employee {
     private int salary;
     private int age;
 
-    public Employee(int id, String name, String gender, int salary, int age) {
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
+    }
+
+    private int companyId;
+    private Boolean active = true;
+
+    public Employee(int id, String name, String gender, int salary, int age,int companyId) {
         this.id = id;
         this.name = name;
         this.gender = gender;
         this.salary = salary;
         this.age = age;
+        this.companyId=companyId;
     }
 
     public Employee() {
@@ -56,5 +68,13 @@ public class Employee {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }

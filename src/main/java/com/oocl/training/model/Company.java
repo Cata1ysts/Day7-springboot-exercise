@@ -1,6 +1,4 @@
-package com.oocl.training.dao;
-
-import java.util.List;
+package com.oocl.training.model;
 
 public class Company {
     private int id;

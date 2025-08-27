@@ -1,6 +1,6 @@
 package com.oocl.training.Util;
 
-import com.oocl.training.dao.Employee;
+import com.oocl.training.model.Employee;
 
 public class EmployeeEntity {
     private Employee employee;
