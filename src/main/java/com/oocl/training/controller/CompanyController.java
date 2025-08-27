@@ -4,7 +4,6 @@ package com.oocl.training.controller;
 import com.oocl.training.Util.DataBase;
 import com.oocl.training.dao.Company;
 import com.oocl.training.dao.Employee;
-import com.oocl.training.dao.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,8 +48,9 @@ public class CompanyController {
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     public void addCompany(@RequestBody Company company){
-        company.setId(db.companyTable.size()+1);
-        db.companyTable.put(db.companyTable.size()+1,company);
+        int idx = db.companyIndexInc();
+        company.setId(idx);
+        db.companyTable.put(idx,company);
     }
 
     @PatchMapping("/{id}")
@@ -72,14 +72,14 @@ public class CompanyController {
     }
 
     @GetMapping("/page")
-    public Page<Company> getCompaniesByPage(
+    public List<Company> getCompaniesByPage(
             @RequestParam int page,
             @RequestParam int size) {
         List<Company> employees = new ArrayList<>(db.companyTable.values());
         int start = (page - 1) * size;
         int end = Math.min(start + size, employees.size());
-        List<Company> pageEmployees = employees.subList(start, end);
-        return new Page<>(page, size, employees.size(), pageEmployees);
+        List<Company> pageConpanies = employees.subList(start, end);
+        return pageConpanies;
     }
 
 }

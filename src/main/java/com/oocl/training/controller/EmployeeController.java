@@ -1,10 +1,11 @@
 package com.oocl.training.controller;
 
 import com.oocl.training.Util.DataBase;
+import com.oocl.training.Util.EmployeeEntity;
 import com.oocl.training.dao.Employee;
 import com.oocl.training.dao.Employee;
-import com.oocl.training.dao.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -34,15 +35,24 @@ public class EmployeeController {
     }
 
 
-    @PostMapping("/{companyId}")
+//    @PostMapping("/{companyId}")
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public void addEmployee(@RequestBody Employee employee,@PathVariable int companyId) {
+//        RequestEntity
+//        int idx = db.employeeTable.size() + 1;
+//        employee.setId(idx);
+//        db.companyemployeeTable.put(companyId,idx);
+//        db.employeeTable.put(idx, employee);
+//    }
+    @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addEmployee(@RequestBody Employee employee,@PathVariable int companyId) {
-        int idx = db.employeeTable.size() + 1;
+    public void addEmployee(@RequestBody EmployeeEntity entity) {
+        int idx = db.employeeIndexInc();
+        Employee employee = entity.getEmployee();
         employee.setId(idx);
-        db.companyemployeeTable.put(companyId,idx);
+        db.companyemployeeTable.put(idx,entity.getCompanyId());
         db.employeeTable.put(idx, employee);
-    }
-
+}
 
     @PutMapping("/{id}")
     public void updateEmployeeById(@PathVariable int id, @RequestParam Employee employee) {
@@ -57,13 +67,13 @@ public class EmployeeController {
     }
 
     @GetMapping("/page")
-    public Page<Employee> getEmployeesByPage(
+    public List<Employee> getEmployeesByPage(
             @RequestParam int page,
             @RequestParam int size) {
         List<Employee> employees = new ArrayList<>(db.employeeTable.values());
         int start = (page - 1) * size;
         int end = Math.min(start + size, employees.size());
         List<Employee> pageEmployees = employees.subList(start, end);
-        return new Page<>(page, size, employees.size(), pageEmployees);
+        return pageEmployees;
     }
 }
