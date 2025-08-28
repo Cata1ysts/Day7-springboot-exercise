@@ -1,6 +1,8 @@
 package com.oocl.training.service;
 
+import com.oocl.training.Util.DataBaseQueryException;
 import com.oocl.training.Util.EmployeeEntity;
+import com.oocl.training.Util.EmployeeInfoException;
 import com.oocl.training.dao.CompanyTable;
 import com.oocl.training.dao.EmployeeTable;
 import com.oocl.training.model.Employee;
@@ -21,8 +23,8 @@ public class EmployeeService {
     }
 
     private static void checkEmployeeValidity(Employee employee) {
-        if(employee.getAge()<18 || employee.getAge()>65) throw new IllegalArgumentException("员工年龄不符合");
-        if(employee.getAge()>30 && employee.getSalary()<20000)  throw new IllegalArgumentException("员工工资太低");
+        if(employee.getAge()<18 || employee.getAge()>65) throw new EmployeeInfoException("员工年龄不符合");
+        if(employee.getAge()>30 && employee.getSalary()<20000)  throw new EmployeeInfoException("员工工资太低");
     }
 
     public Employee getEmployeeById(int id) {
@@ -50,8 +52,8 @@ public class EmployeeService {
     }
 
     private static void checkEmployeeExsisted(Employee employee_old) {
-        if(employee_old == null) throw new IllegalArgumentException("员工不存在");
-        if(employee_old.getActive()==false) throw new IllegalArgumentException("员工已离职");
+        if(employee_old == null) throw new DataBaseQueryException("员工不存在");
+        if(employee_old.getActive()==false) throw new EmployeeInfoException("员工已离职");
     }
 
     public void deleteEmployeeById(int id) {
