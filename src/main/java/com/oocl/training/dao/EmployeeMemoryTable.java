@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
-public class EmployeeMemoryTable {
+public class EmployeeMemoryTable implements EmployeeTable {
     public Map<Integer, Employee> employeeTable;
     private int employeeIndex;
     public EmployeeMemoryTable() {

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class CompanyMemoryTable {
+public class CompanyMemoryTable implements CompanyTable{
     public Map<Integer, Company> companyTable;
     private int companyIndex;
     public CompanyMemoryTable() {
