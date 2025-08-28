@@ -18,8 +18,8 @@ public class GolbalExceptionHandler {
     public ResponseEntity<?> handleEmployeeException(EmployeeInfoException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                 Map.of(
-                        "message","Illegal argument error",
-                        "error", ex.getMessage(),
+                        "error","Illegal argument error",
+                        "message", ex.getMessage(),
                         "timestamp", LocalDateTime.now()
                 )
         );
@@ -30,8 +30,8 @@ public class GolbalExceptionHandler {
     public ResponseEntity<?> handleDataBaseQueryException(DataBaseQueryException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                 Map.of(
-                        "message","Data not found",
-                        "error", ex.getMessage(),
+                        "error","Data not found",
+                        "message", ex.getMessage(),
                         "timestamp", LocalDateTime.now()
                 )
         );
@@ -43,8 +43,8 @@ public class GolbalExceptionHandler {
     public ResponseEntity<?> handleOtherException(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
                 Map.of(
-                        "message","Internal Server Error",
-                        "error", "未知错误",
+                        "error","Internal Server Error",
+                        "message", "未知错误",
                         "timestamp", LocalDateTime.now()
                 )
         );

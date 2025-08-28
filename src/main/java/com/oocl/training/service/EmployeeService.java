@@ -1,10 +1,9 @@
 package com.oocl.training.service;
 
 import com.oocl.training.Util.DataBaseQueryException;
-import com.oocl.training.Util.EmployeeEntity;
 import com.oocl.training.Util.EmployeeInfoException;
-import com.oocl.training.dao.CompanyTable;
-import com.oocl.training.dao.EmployeeTable;
+import com.oocl.training.dao.CompanyMemoryTable;
+import com.oocl.training.dao.EmployeeMemoryTable;
 import com.oocl.training.model.Employee;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +11,13 @@ import java.util.List;
 
 @Service
 public class EmployeeService {
-    private final EmployeeTable employeeTable;
-    public EmployeeService(CompanyTable companyTable,EmployeeTable employeeTable) {
-        this.employeeTable = employeeTable;
+    private final EmployeeMemoryTable employeeMemoryTable;
+    public EmployeeService(CompanyMemoryTable companyMemoryTable, EmployeeMemoryTable employeeMemoryTable) {
+        this.employeeMemoryTable = employeeMemoryTable;
     }
     public Employee addEmployee(Employee employee){
         checkEmployeeValidity(employee);
-        return employeeTable.newEmployee(employee);
+        return employeeMemoryTable.newEmployee(employee);
 
     }
 
@@ -28,27 +27,27 @@ public class EmployeeService {
     }
 
     public Employee getEmployeeById(int id) {
-        Employee employee = employeeTable.getEmployee(id);
+        Employee employee = employeeMemoryTable.getEmployee(id);
         checkEmployeeValidity(employee);
         return employee;
     }
 
     public List<Employee> getEmployeeByGender(String gender){
         if (gender != null && !gender.isEmpty()) {
-            return employeeTable.getEmployee(gender).stream()
+            return employeeMemoryTable.getEmployee(gender).stream()
                     .filter(employee -> employee.getActive())
                     .filter(employee -> employee.getGender().equals(gender))
                     .toList();
         }
-        return employeeTable.getEmployee();
+        return employeeMemoryTable.getEmployee();
     }
 
     public Employee updateEmployee(int id, Employee employee){
         checkEmployeeValidity(employee);
-        Employee employee_old = employeeTable.getEmployee(id);
+        Employee employee_old = employeeMemoryTable.getEmployee(id);
         checkEmployeeExsisted(employee_old);
         employee.setId(employee_old.getId());
-        return employeeTable.updateEmployee(id,employee);
+        return employeeMemoryTable.updateEmployee(id,employee);
     }
 
     private static void checkEmployeeExsisted(Employee employee_old) {
@@ -57,17 +56,17 @@ public class EmployeeService {
     }
 
     public void deleteEmployeeById(int id) {
-        //employeeTable.remove(id);
-        Employee employee = employeeTable.getEmployee(id);
+        //employeeMemoryTable.remove(id);
+        Employee employee = employeeMemoryTable.getEmployee(id);
         checkEmployeeExsisted(employee);
         employee.setActive(false);
-        employeeTable.updateEmployee(id,employee);
+        employeeMemoryTable.updateEmployee(id,employee);
 
     }
 
 
     public List<Employee> getEmployeeByPage(int page, int size) {
-        List<Employee> employees = employeeTable.getEmployee();
+        List<Employee> employees = employeeMemoryTable.getEmployee();
         int start = (page - 1) * size;
         int end = Math.min(start + size, employees.size());
         List<Employee> pageEmployees = employees.subList(start, end).stream()

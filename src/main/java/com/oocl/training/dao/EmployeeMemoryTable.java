@@ -9,10 +9,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
-public class EmployeeTable {
+public class EmployeeMemoryTable {
     public Map<Integer, Employee> employeeTable;
     private int employeeIndex;
-    public EmployeeTable() {
+    public EmployeeMemoryTable() {
 //        this.employeeTable = new HashMap<>(Map.of(
 //                1, new Employee(1, "John Smith", "male",32,  5000,1),
 //                2, new Employee(2, "Jane Johnson", "female",28,  6000,1),

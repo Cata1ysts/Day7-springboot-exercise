@@ -1,6 +1,13 @@
 package com.oocl.training.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "company")
 public class Company {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "company_Id")
     private int id;
     private String name;
 

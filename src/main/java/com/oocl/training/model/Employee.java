@@ -1,11 +1,21 @@
 package com.oocl.training.model;
 
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "employee")
 public class Employee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String gender;
     private int salary;
     private int age;
+    @Column(name = "company_id")
+    private int companyId;
+    private Boolean active = true;
 
     public int getCompanyId() {
         return companyId;
@@ -14,9 +24,6 @@ public class Employee {
     public void setCompanyId(int companyId) {
         this.companyId = companyId;
     }
-
-    private int companyId;
-    private Boolean active = true;
 
     public Employee(int id, String name, String gender, int salary, int age,int companyId) {
         this.id = id;

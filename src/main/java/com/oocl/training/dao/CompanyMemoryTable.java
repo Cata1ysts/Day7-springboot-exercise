@@ -1,19 +1,17 @@
 package com.oocl.training.dao;
 
 import com.oocl.training.model.Company;
-import com.oocl.training.model.Company;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Component
-public class CompanyTable {
+public class CompanyMemoryTable {
     public Map<Integer, Company> companyTable;
     private int companyIndex;
-    public CompanyTable() {
+    public CompanyMemoryTable() {
 //        this.companyTable = new HashMap<>(Map.of(
 //                1, new Company(1, "Acme Corporation"),
 //                2, new Company(2, "TechCom Solutions"),
