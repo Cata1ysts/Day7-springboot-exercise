@@ -13,13 +13,14 @@ public class EmployeeTable {
     public Map<Integer, Employee> employeeTable;
     private int employeeIndex;
     public EmployeeTable() {
-        this.employeeTable = new HashMap<>(Map.of(
-                1, new Employee(1, "John Smith", "male",32,  5000,1),
-                2, new Employee(2, "Jane Johnson", "female",28,  6000,1),
-                3, new Employee(3, "David Williams","male", 35,  5500,2),
-                4, new Employee(4, "Emily Brown","female", 23,  4500,1),
-                5, new Employee(5, "Michael Jones", "male",40,  7000,2)));
-        this.employeeIndex=5;
+//        this.employeeTable = new HashMap<>(Map.of(
+//                1, new Employee(1, "John Smith", "male",32,  5000,1),
+//                2, new Employee(2, "Jane Johnson", "female",28,  6000,1),
+//                3, new Employee(3, "David Williams","male", 35,  5500,2),
+//                4, new Employee(4, "Emily Brown","female", 23,  4500,1),
+//                5, new Employee(5, "Michael Jones", "male",40,  7000,2)));
+        employeeTable = new HashMap<>();
+        this.employeeIndex=0;
     }
 
 
@@ -50,6 +51,10 @@ public class EmployeeTable {
 
     public void remove(int employeeId) {
         employeeTable.remove(employeeId);
+    }
+    public void drop(){
+        employeeTable.clear();
+        employeeIndex=0;
     }
 
 }

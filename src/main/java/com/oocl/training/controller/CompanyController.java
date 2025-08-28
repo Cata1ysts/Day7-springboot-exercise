@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/companies/")
+@RequestMapping("/companies")
 public class CompanyController {
     private final CompanyService companyService;
 
