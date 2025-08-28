@@ -1,5 +1,6 @@
 package com.oocl.training.service;
 
+import com.oocl.training.Util.EmployeeInfoException;
 import com.oocl.training.dao.EmployeeMemoryTable;
 import com.oocl.training.model.Employee;
 import org.junit.jupiter.api.Test;
@@ -38,7 +39,7 @@ class EmployeeServiceTest {
         Mockito.when(employeeMemoryTable.newEmployee(Mockito.any(Employee.class)))
                 .thenReturn(employee);
         //When
-        assertThrowsExactly(IllegalArgumentException.class,()->employeeService.addEmployee(employee));
+        assertThrowsExactly(EmployeeInfoException.class,()->employeeService.addEmployee(employee));
     }
 
     @Test
@@ -48,7 +49,7 @@ class EmployeeServiceTest {
         Mockito.when(employeeMemoryTable.newEmployee(Mockito.any(Employee.class)))
                 .thenReturn(employee);
         //When
-        assertThrowsExactly(IllegalArgumentException.class,()->employeeService.addEmployee(employee));
+        assertThrowsExactly(EmployeeInfoException.class,()->employeeService.addEmployee(employee));
     }
 
     @Test
@@ -58,7 +59,7 @@ class EmployeeServiceTest {
         Mockito.when(employeeMemoryTable.newEmployee(Mockito.any(Employee.class)))
                 .thenReturn(employee);
         //When
-        assertThrowsExactly(IllegalArgumentException.class,()->employeeService.addEmployee(employee));
+        assertThrowsExactly(EmployeeInfoException.class,()->employeeService.addEmployee(employee));
     }
 
     @Test
