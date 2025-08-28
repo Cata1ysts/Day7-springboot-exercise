@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -108,6 +108,21 @@ public class EmployeeIntegrationTest {
         Employee result = employeeTable.getEmployee(3);
         //then
         compareEmployee(expection,result);
+    }
+
+
+    @Test
+    public void should_return_no_employees_when_delete_employee() throws Exception {
+        //given
+        int eid =3;
+        Employee exception = employeeTable.getEmployee(eid);
+        exception.setActive(false);
+        //when
+        ResultActions perform = client.perform(MockMvcRequestBuilders.delete(String.format("/employees/%d",eid)));
+        Employee after_delete = employeeTable.getEmployee(eid);
+        //then
+        compareEmployee(exception,after_delete);
+
     }
 
 }
