@@ -5,6 +5,7 @@ import com.oocl.training.Util.EmployeeInfoException;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -38,16 +39,27 @@ public class GolbalExceptionHandler {
 
     }
 
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> handleOtherException(Exception ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                 Map.of(
-                        "error","Internal Server Error",
-                        "message", "未知错误",
+                        "error","Input data error",
+                        "message", ex.getMessage(),
                         "timestamp", LocalDateTime.now()
                 )
         );
 
     }
+
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<?> handleOtherException(Exception ex) {
+//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+//                Map.of(
+//                        "error","Internal Server Error",
+//                        "message", "未知错误",
+//                        "timestamp", LocalDateTime.now()
+//                )
+//        );
+//
+//    }
 }
