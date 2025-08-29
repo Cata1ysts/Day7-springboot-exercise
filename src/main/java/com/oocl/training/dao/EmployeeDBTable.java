@@ -22,8 +22,7 @@ public class EmployeeDBTable implements EmployeeTable {
     @Override
     public Employee updateEmployee(int employeeId, Employee employee) {
         employee.setId(employeeId);
-        jpaEmployeeTable.save(employee);
-        return employee;
+        return jpaEmployeeTable.save(employee);
     }
 
     @Override
@@ -51,5 +50,10 @@ public class EmployeeDBTable implements EmployeeTable {
     public void drop() {
         jpaEmployeeTable.deleteAll();
 
+    }
+
+    @Override
+    public List<Employee> getEmployeesByCompanyId(int companyId) {
+        return jpaEmployeeTable.getEmployeesByCompanyId(companyId);
     }
 }

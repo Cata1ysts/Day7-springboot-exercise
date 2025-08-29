@@ -9,5 +9,5 @@ public interface JpaEmployeeTable extends JpaRepository<Employee,Integer> {
 
 
     List<Employee> getEmployeesByGender(String gender);
-
+    List<Employee> getEmployeesByCompanyId(int companyId);
 }

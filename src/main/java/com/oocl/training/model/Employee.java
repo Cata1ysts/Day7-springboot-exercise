@@ -13,17 +13,23 @@ public class Employee {
     private String gender;
     private int salary;
     private int age;
-    @Column(name = "company_id")
-    private int companyId;
+//    @Transient
+//    private int companyId;
     private Boolean active = true;
 
-    public int getCompanyId() {
-        return companyId;
-    }
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "company_id")
+    private Company company;
 
-    public void setCompanyId(int companyId) {
-        this.companyId = companyId;
-    }
+//    public int getCompanyId() {
+//        return companyId;
+//    }
+//
+//    public void setCompanyId(int companyId) {
+//        this.companyId = companyId;
+//    }
+
+
 
     public Employee(int id, String name, String gender, int salary, int age,int companyId) {
         this.id = id;
@@ -31,7 +37,7 @@ public class Employee {
         this.gender = gender;
         this.salary = salary;
         this.age = age;
-        this.companyId=companyId;
+        //this.companyId=companyId;
     }
 
     public Employee() {
@@ -83,5 +89,13 @@ public class Employee {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 }

@@ -57,4 +57,11 @@ public class EmployeeMemoryTable implements EmployeeTable {
         employeeIndex=0;
     }
 
+    @Override
+    public List<Employee> getEmployeesByCompanyId(int companyId) {
+                return  getEmployee().stream()
+                //.filter(employee -> employee.getCompanyId() == companyId && employee.getActive())
+                .toList();
+    }
+
 }
