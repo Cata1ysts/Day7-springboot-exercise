@@ -18,4 +18,5 @@ public interface EmployeeTable {
 
     public void remove(int employeeId) ;
     public void drop();
+    //public List<Employee> getByPage(Integer)
 }

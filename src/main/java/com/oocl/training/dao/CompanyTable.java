@@ -1,9 +1,11 @@
 package com.oocl.training.dao;
 
 import com.oocl.training.model.Company;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 import java.util.List;
-
 public interface CompanyTable {
     public Company newCompany(Company company);
     public Company updateCompany(int companyId, Company company);

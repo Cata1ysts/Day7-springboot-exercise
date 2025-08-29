@@ -1,9 +1,10 @@
 package com.oocl.training.dao;
 
 import com.oocl.training.model.Company;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public class CompanyDBTable implements CompanyTable {
 
     private JpaCompanyTable jpaCompanyTable;
