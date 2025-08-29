@@ -1,6 +1,8 @@
 package com.oocl.training.controller;
 
-import com.oocl.training.Util.EmployeeEntity;
+import com.oocl.training.dto.EmployeeRequest;
+import com.oocl.training.dto.EmployeeResponse;
+import com.oocl.training.dto.mapper.EmployeeMapper;
 import com.oocl.training.model.Employee;
 import com.oocl.training.service.EmployeeService;
 import org.springframework.http.HttpStatus;
@@ -12,32 +14,36 @@ import java.util.List;
 @RequestMapping("/employees")
 public class EmployeeController {
     private final EmployeeService employeeService;
-    public EmployeeController(EmployeeService employeeService) {
+    private final EmployeeMapper employeeMapper;
+    public EmployeeController(EmployeeService employeeService,EmployeeMapper employeeMapper) {
         this.employeeService = employeeService;
+        this.employeeMapper = employeeMapper;
     }
 
 
 
     @GetMapping("/{id}")
-    public Employee getEmployeeById(@PathVariable int id) {
-        return employeeService.getEmployeeById(id);
+    public EmployeeResponse getEmployeeById(@PathVariable int id) {
+        return employeeMapper.toResponse(employeeService.getEmployeeById(id));
 
     }
 
     @GetMapping("/")
-    public List<Employee> getEmployeesByGender(@RequestParam(required = false) String gender) {
-        return employeeService.getEmployeeByGender(gender);
+    public List<EmployeeResponse> getEmployeesByGender(@RequestParam(required = false) String gender) {
+        return employeeMapper.toResponse(employeeService.getEmployeeByGender(gender));
     }
 
     @PostMapping("/")
     //@ResponseStatus(HttpStatus.OK)
-    public Employee addEmployee(@RequestBody Employee employee) {
-        return employeeService.addEmployee(employee);
+    public EmployeeResponse addEmployee(@RequestBody EmployeeRequest employeeRequest) {
+        Employee employee = employeeMapper.toEntity(employeeRequest);
+        return employeeMapper.toResponse(employeeService.addEmployee(employee));
 }
 
     @PutMapping("/{id}")
-    public Employee updateEmployeeById(@PathVariable int id, @RequestBody Employee employee) {
-        return employeeService.updateEmployee(id, employee);
+    public EmployeeResponse updateEmployeeById(@PathVariable int id, @RequestBody EmployeeRequest employeeRequest) {
+        Employee employee = employeeMapper.toEntity(employeeRequest);
+        return employeeMapper.toResponse(employeeService.updateEmployee(id, employee));
     }
 
 
@@ -48,9 +54,9 @@ public class EmployeeController {
     }
 
     @GetMapping("/page")
-    public List<Employee> getEmployeesByPage(
+    public List<EmployeeResponse> getEmployeesByPage(
             @RequestParam int page,
             @RequestParam int size) {
-        return employeeService.getEmployeeByPage(page,size);
+        return employeeMapper.toResponse(employeeService.getEmployeeByPage(page,size));
     }
 }
