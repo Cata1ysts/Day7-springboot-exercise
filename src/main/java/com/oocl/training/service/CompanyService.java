@@ -25,9 +25,8 @@ public class CompanyService {
     }
 
     public List<Employee> getEmployeesByCompany(int companyId) {
-        return  employeeTable.getEmployee().stream()
-                .filter(employee -> employee.getCompanyId() == companyId && employee.getActive())
-                .toList();
+
+        return employeeTable.getEmployeesByCompanyId(companyId);
 
     }
 
