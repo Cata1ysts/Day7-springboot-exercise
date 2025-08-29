@@ -19,6 +19,10 @@ public class Company {
         this.name = name;
     }
 
+    public Company(int companyId) {
+        this.id=companyId;
+    }
+
 
     public String getName() {
         return name;

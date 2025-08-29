@@ -21,7 +21,7 @@ public class CompanyDBTable implements CompanyTable {
     public Company updateCompany(int companyId, Company company) {
         company.setId(companyId);
         jpaCompanyTable.save(company);
-        return company;
+        return jpaCompanyTable.findById(companyId).orElse(null);
     }
 
     @Override
