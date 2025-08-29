@@ -1,22 +1,12 @@
 package com.oocl.training.dto;
 
-import com.oocl.training.model.Company;
-
-public class EmployeeResponse {
-    private int id;
+public class EmployeeRequest {
     private String name;
     private int age;
     private String gender;
-    private Company company;
-    public EmployeeResponse(){}
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    private int salary;
+    private int companyId;
+    public EmployeeRequest(){}
 
     public String getName() {
         return name;
@@ -42,11 +32,19 @@ public class EmployeeResponse {
         this.gender = gender;
     }
 
-    public Company getCompany() {
-        return company;
+    public int getSalary() {
+        return salary;
     }
 
-    public void setCompany(Company company) {
-        this.company = company;
+    public void setSalary(int salary) {
+        this.salary = salary;
+    }
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
     }
 }
