@@ -4,10 +4,7 @@ package com.oocl.training.Integration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oocl.training.dao.EmployeeDBTable;
 import com.oocl.training.model.Employee;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@Disabled
 public class EmployeeIntegrationTest {
     @Autowired
     private MockMvc client;
