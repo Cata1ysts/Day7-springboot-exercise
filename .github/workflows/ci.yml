@@ -64,7 +64,6 @@ jobs:
           done
 
       - name: Run tests
-        env:
         run: mvn clean test
 
       #      - name: analyze with SonarQube
