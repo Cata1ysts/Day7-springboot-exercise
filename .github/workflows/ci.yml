@@ -1,0 +1,76 @@
+name: Spring Boot CI Exercise
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: secret
+          MYSQL_DATABASE: flyway
+          MYSQL_USER: root
+          MYSQL_PASSWORD: secret
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '24'
+
+      #      - name: Cache SonarQube packages
+      #        uses: actions/cache@v4
+      #        with:
+      #          path: ~/.sonar/cache
+      #          key: ${{ runner.os }}-sonar
+      #          restore-keys: ${{ runner.os }}-sonar
+
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Set environment variables
+        run: |
+          echo "SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/mydb" >> $GITHUB_ENV
+          echo "SPRING_DATASOURCE_USERNAME=myuser" >> $GITHUB_ENV
+          echo "SPRING_DATASOURCE_PASSWORD=mypassword" >> $GITHUB_ENV
+
+      - name: Wait for MySQL
+        run: |
+          for i in {1..30}; do
+            nc -z localhost 3306 && echo "MySQL is up" && break
+            echo "Waiting for MySQL..."
+            sleep 2
+          done
+
+      - name: Run tests
+        env:
+        run: mvn clean test
+
+      #      - name: analyze with SonarQube
+      #        env:
+      #          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      #        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=2025-Bootcamp_springboot-demo-private -DskipTests
+
+      - name: Build with Maven using production profile
+        run: mvn clean package -DskipTests
